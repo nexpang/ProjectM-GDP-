@@ -12,7 +12,7 @@ public class CONArcher : CONEntity
     private CONEnemy targetEnemy;
 
     private float lookForTargetTimer;
-    private float lookForTargetTimerMax = 0.2f;
+    private float lookForTargetTimerMax = 0.1f;
 
     private Vector3 arrowSpawnPos;
     private Animator anim;
@@ -52,7 +52,12 @@ public class CONArcher : CONEntity
             shootTimer += shootTimerMax;
             if (targetEnemy != null)
             {
+                anim.SetTrigger("doAttack");
                 CONArrow.Create(arrowSpawnPos, targetEnemy);
+            }
+            else
+            {
+                anim.SetTrigger("doStop");
             }
         }
     }
@@ -66,9 +71,8 @@ public class CONArcher : CONEntity
         foreach (Collider2D collider in collider2DArray)
         {
             CONEnemy enemy = collider.GetComponent<CONEnemy>();
-            if (enemy != null)
+            if (enemy != null && enemy.IsActive())
             {
-                anim.SetTrigger("doAttack");
                 if (targetEnemy == null)
                 {
                     targetEnemy = enemy;
@@ -80,10 +84,6 @@ public class CONArcher : CONEntity
                         targetEnemy = enemy;
                     }
                 }
-            }
-            else
-            {
-                anim.SetTrigger("doStop");
             }
         }
     }

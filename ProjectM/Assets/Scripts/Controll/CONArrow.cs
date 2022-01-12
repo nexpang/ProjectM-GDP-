@@ -20,9 +20,13 @@ public class CONArrow : CONEntity
 
         arrowProjectile.SetTarget(enemy);
 
-        arrowProjectile.timeToDie = 2f;
-
         return arrowProjectile;
+    }
+
+    public override void OnEnable()
+    {
+        base.OnEnable();
+        timeToDie = 2f;
     }
 
     public override void Update()
@@ -30,6 +34,11 @@ public class CONArrow : CONEntity
         base.Update();
 
         Vector3 moveDir;
+        if (targetEnemy != null && !targetEnemy.IsActive())
+        {
+            targetEnemy = null;
+        }
+
         if (targetEnemy != null)
         {
             moveDir = (targetEnemy.transform.position - transform.position).normalized;
