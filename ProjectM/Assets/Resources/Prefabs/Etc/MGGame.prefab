@@ -861,7 +861,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6732069314816154828}
   - component: {fileID: 8802346404543626853}
-  - component: {fileID: 7967926464909808453}
   m_Layer: 0
   m_Name: Base Blue
   m_TagString: Untagged
@@ -934,19 +933,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7967926464909808453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6436342648778810885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b690758359e564499f9f9a872c29465, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthAmountMax: 100
 --- !u!1 &7401218728698276342
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,14 +1024,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
---- !u!4 &647134168727965416 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 647134169409435799, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
-  m_PrefabInstance: {fileID: 950466175}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3126957720109828944 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3126957719968890159, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
+  m_PrefabInstance: {fileID: 950466175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &647134168727965416 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 647134169409435799, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
   m_PrefabInstance: {fileID: 950466175}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &679126484
