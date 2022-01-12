@@ -25,8 +25,8 @@ public class HeroState
 
     protected HeroState nextState;
 
-    float detectDist = 8.0f;
-    float attackDist = 3.0f;
+    float detectDist = 15.0f;
+    float attackDist = 4.0f;
     protected float speed = 3.0f;
 
     public HeroState(GameObject obj, Animator anim, GameObject targetEnemy)
@@ -59,7 +59,7 @@ public class HeroState
     {
         closestEnemy = null;
         float distance = Mathf.Infinity;
-        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(detectDist, 1), 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(detectDist, 1), 0, 1 << LayerMask.NameToLayer("Enemy"));
 
         if (hit.Length > 0) // 적이 보인다 (true)
         {
@@ -83,7 +83,7 @@ public class HeroState
     {
         closestEnemy = null;
         float distance = Mathf.Infinity;
-        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(detectDist, 1), 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(attackDist, 1), 0, 1 << LayerMask.NameToLayer("Enemy"));
 
         if (hit.Length > 0) // 적이 보인다 (true)
         {
@@ -181,6 +181,8 @@ public class HeroPursue : HeroState
     {
         base.Update();
 
+        myObj.transform.position = Vector3.MoveTowards(myObj.transform.position, targetEnemy.transform.position, speed * Time.deltaTime);
+
         float flipDir = myObj.transform.position.x - targetEnemy.transform.position.x;
         sr.flipX = (flipDir > 0);
 
@@ -207,6 +209,7 @@ public class HeroAttack : HeroState
     public HeroAttack(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim, targetEnemy)
     {
         stateName = eState.ATTACK;
+        speed = 5f;
         this.targetEnemy = targetEnemy;
     }
 
