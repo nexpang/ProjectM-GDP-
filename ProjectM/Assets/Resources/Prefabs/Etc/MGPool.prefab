@@ -51,6 +51,6 @@ MonoBehaviour:
   - {fileID: 8042974024142965120, guid: 124c4293df1e7974fb98ad79ee1db28e, type: 3}
   - {fileID: 3420699037522048006, guid: cf3264490ee3aa448ac73aade6bffc72, type: 3}
   - {fileID: 8075922703538542133, guid: db116feca0450d24b9608c6445f5d4c7, type: 3}
-  poolHeroCountList: 0100000001000000090000000a0000000f000000
+  poolHeroCountList: 010000000100000009000000140000001e000000
   poolHeroMaxCount: 5
   myTrm: {fileID: 0}

@@ -129,4 +129,4 @@ MonoBehaviour:
   myKind: 1003
   myTrm: {fileID: 0}
   myVelocity: {x: 0, y: 0, z: 0}
-  shootTimerMax: 0
+  shootTimerMax: 0.6

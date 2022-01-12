@@ -24,13 +24,16 @@ public class EnemyState
 
     protected EnemyState nextState;
 
-    float attackDist = 7.0f;
+    float attackDist = 1.0f;
+    private HealthSystem healthSystem;
 
     public EnemyState(GameObject obj, Animator anim, Transform targetTrm)
     {
         myObj = obj;
         myAnim = anim;
         playerTrm = targetTrm;
+
+        healthSystem = myObj.GetComponent<HealthSystem>();
 
         curEvent = eEvent.ENTER;
     }
@@ -53,11 +56,16 @@ public class EnemyState
 
     protected bool CanAttackTower()
     {
-        if(Mathf.Abs(playerTrm.position.x-myObj.transform.position.x) < 1)
+        if(Mathf.Abs(playerTrm.position.x-myObj.transform.position.x) < attackDist)
         {
             return true;
         }
         return false;
+    }
+
+    protected bool IsDead()
+    {
+        return healthSystem.isDead();
     }
 }
 
@@ -86,7 +94,12 @@ public class EnemyPursue : EnemyState
         rigid.velocity = Vector2.left * moveSpeed;
 
         // 성 공격이되면 공격
-        if (CanAttackTower())
+        if(IsDead())
+        {
+            nextState = new EnemyDead(myObj, myAnim, playerTrm);
+            curEvent = eEvent.EXIT;
+        }
+        else if (CanAttackTower())
         {
             nextState = new EnemyAttack(myObj, myAnim, playerTrm);
             curEvent = eEvent.EXIT;
@@ -116,7 +129,12 @@ public class EnemyAttack : EnemyState
     public override void Update()
     {
         // 공격 범위 벗어나면 다시 추적
-        if (!CanAttackTower())
+        if (IsDead())
+        {
+            nextState = new EnemyDead(myObj, myAnim, playerTrm);
+            curEvent = eEvent.EXIT;
+        }
+        else if (!CanAttackTower())
         {
             nextState = new EnemyPursue(myObj, myAnim, playerTrm);
             curEvent = eEvent.EXIT;

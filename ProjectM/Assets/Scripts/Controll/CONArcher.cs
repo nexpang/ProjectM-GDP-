@@ -46,7 +46,7 @@ public class CONArcher : CONEntity
 
         if (shootTimer <= 0f)
         {
-            shootTimer += lookForTargetTimerMax;
+            shootTimer += shootTimerMax;
             if (targetEnemy != null)
             {
                 CONArrow.Create(arrowSpawnPos, targetEnemy);

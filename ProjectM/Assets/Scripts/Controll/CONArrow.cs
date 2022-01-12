@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class CONArrow : CONEntity
 {
+    private CONEnemy targetEnemy;
+    private Vector3 lastMoveDir;
+    private float timeToDie = 2f;
+
     public static CONArrow Create(Vector3 pos, CONEnemy enemy)
     {
         //Transform arrowPrefab = Resources.Load<Transform>("arrowPrefab");
@@ -16,12 +20,10 @@ public class CONArrow : CONEntity
 
         arrowProjectile.SetTarget(enemy);
 
+        arrowProjectile.timeToDie = 2f;
+
         return arrowProjectile;
     }
-
-    private CONEnemy targetEnemy;
-    private Vector3 lastMoveDir;
-    private float timeToDie = 2f;
 
     public override void Update()
     {
@@ -52,7 +54,7 @@ public class CONArrow : CONEntity
 
         if (timeToDie < 0f)
         {
-            Destroy(gameObject);
+            SetActive(false);
         }
     }
 
@@ -63,7 +65,7 @@ public class CONArrow : CONEntity
         {
             enemy.GetComponent<HealthSystem>().Damage(10);
 
-            Destroy(gameObject);
+            SetActive(false);
         }
     }
 
