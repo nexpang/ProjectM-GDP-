@@ -93,14 +93,14 @@ public class UIRootGame : MonoBehaviour
                 skill.Skill2Active();
             }
         });
-/*
-        () =>
-        {
-            Time.timeScale = 0;
-            GameOverPanel.DOFade(1, 0.5f);
-            GameOverPanel.blocksRaycasts = true;
-            GameOverPanel.interactable = true;
-        };*/
+
+        GameSceneClass.gMGGame.OnGameOver += () =>
+          {
+              Time.timeScale = 0;
+              GameOverPanel.DOFade(1, 0.5f).SetUpdate(true);
+              GameOverPanel.blocksRaycasts = true;
+              GameOverPanel.interactable = true;
+          };
 
         skipTimeButton.onClick.AddListener(SkipTime);
         pauseButton.onClick.AddListener(Pause);
