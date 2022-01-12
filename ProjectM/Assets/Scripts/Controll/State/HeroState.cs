@@ -27,6 +27,7 @@ public class HeroState
 
     float detectDist = 15.0f;
     float attackDist = 4.0f;
+    protected float attackRange = 4.0f;
     protected float speed = 3.0f;
 
     public HeroState(GameObject obj, Animator anim, GameObject targetEnemy)
@@ -206,6 +207,9 @@ public class HeroPursue : HeroState
 
 public class HeroAttack : HeroState
 {
+    private const float attackCoolDown = 1f;
+    private float curAttackCoolDown = attackCoolDown;
+
     public HeroAttack(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim, targetEnemy)
     {
         stateName = eState.ATTACK;
@@ -222,9 +226,28 @@ public class HeroAttack : HeroState
     {
         Vector3 dir = myObj.transform.position - targetEnemy.transform.position;
 
-        if (dir.magnitude >= 1)
+        if (dir.magnitude >= attackRange / 2)
         {
             myObj.transform.position = Vector3.MoveTowards(myObj.transform.position, targetEnemy.transform.position, speed * Time.deltaTime);
+        }
+        else
+        {
+            curAttackCoolDown += Time.deltaTime;
+
+            if (curAttackCoolDown > attackCoolDown)
+            {
+                curAttackCoolDown -= attackCoolDown;
+                myAnim.SetTrigger("doAttack");
+                RaycastHit2D[] hit = Physics2D.RaycastAll(myObj.transform.position, sr.flipX ? Vector2.left : Vector2.right, attackRange, 1 << LayerMask.NameToLayer("Enemy"));
+
+                if (hit.Length > 0)
+                {
+                    for (int i = 0; i < hit.Length; i++)
+                    {
+                        //hit[i].collider.GetComponent<CONEnemy>().OnDamage();
+                    }
+                }
+            }
         }
 
         float flipDir = myObj.transform.position.x - targetEnemy.transform.position.x;
