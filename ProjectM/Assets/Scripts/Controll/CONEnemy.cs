@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CONEnemy : CONEntity
 {
+    // 스테이트 머신을 사용할(필요한) 유닛에게 부착시킬것이다
+
+    Animator myAnim;
+    EnemyState curState;
+    Transform targetCastle;
     public static CONEnemy Create(Vector3 pos)
     {
         Transform enemyTrm = GameSceneClass.gMGPool.CreateObj(ePrefabs.Enemy, pos).transform;
@@ -11,96 +16,17 @@ public class CONEnemy : CONEntity
         return enemyTrm.GetComponent<CONEnemy>();
     }
 
-    private Rigidbody2D rigidbody2D;
-    private Transform targetTrm; //커맨드센터
-
-    private HealthSystem healthSystem;
-
-    private float lookForTargetTimer;
-    private float lookForTargetTimerMax = 0.2f;
-
-    private void Start()
+    public override void Start()
     {
-        rigidbody2D = GetComponent<Rigidbody2D>();
-
-        //targetTrm = 
-
-        healthSystem = GetComponent<HealthSystem>();
-        healthSystem.OnDied += CallOnDied;
-
-        lookForTargetTimer = Random.Range(0f, lookForTargetTimerMax);
+        base.Start();
+        targetCastle = GameObject.FindGameObjectWithTag("Castlepoint").transform;
+        myAnim = this.GetComponent<Animator>();
+        curState = new EnemyPursue(this.gameObject, myAnim, targetCastle);
     }
 
-    private void CallOnDied()
+    public override void Update()
     {
-        Destroy(gameObject);
-    }
-
-    private void Update()
-    {
-        HandleMovement();
-
-        HandleTargetting();
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
-    }
-
-    private void HandleMovement()
-    {
-        if (targetTrm != null)
-        {
-            Vector3 moveDir = (targetTrm.position - transform.position).normalized;
-
-            float moveSpeed = 7f;
-            rigidbody2D.velocity = moveDir * moveSpeed;
-        }
-        else
-        {
-            rigidbody2D.velocity = Vector2.zero;
-        }
-    }
-
-    private void HandleTargetting()
-    {
-        lookForTargetTimer -= Time.deltaTime;
-        if (lookForTargetTimer < 0f)
-        {
-            lookForTargetTimer += lookForTargetTimerMax;
-            LookForTargets();
-        }
-    }
-
-    private void LookForTargets()
-    {
-        //float targetMaxRadius = 10;
-
-        //Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(transform.position, targetMaxRadius);
-
-        //foreach (Collider2D collider in collider2DArray)
-        //{
-        //    Building building = collider.GetComponent<Building>();
-        //    if (building != null)
-        //    {
-        //        if (targetTrm == null)
-        //        {
-        //            targetTrm = building.transform;
-        //        }
-        //        else
-        //        {
-        //            if (Vector3.Distance(transform.position, building.transform.position) < Vector3.Distance(transform.position, targetTrm.position))
-        //            {
-        //                targetTrm = building.transform;
-        //            }
-        //        }
-        //    }
-        //}
-
-        //if (targetTrm == null)
-        //{
-        //    targetTrm = BuilderManager.Instance.GetCCBuilding().transform;
-        //}
+        base.Update();
+        curState = this.curState.Process();
     }
 }

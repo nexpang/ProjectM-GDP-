@@ -50,10 +50,22 @@ public class EnemyState
         }
         return this;
     }
+
+    protected bool CanAttackTower()
+    {
+        if(Mathf.Abs(playerTrm.position.x-myObj.transform.position.x) < 1)
+        {
+            return true;
+        }
+        return false;
+    }
 }
 
 public class EnemyPursue : EnemyState
 {
+    float moveSpeed;
+    private Rigidbody2D rigid;
+
     public EnemyPursue(GameObject obj, Animator anim, Transform targetTrm) : base(obj, anim, targetTrm)
     {
         stateName = eState.PURSUE;
@@ -61,6 +73,8 @@ public class EnemyPursue : EnemyState
 
     public override void Enter()
     {
+        moveSpeed = 3f;
+        rigid = myObj.GetComponent<Rigidbody2D>();
         myAnim.SetTrigger("isRunning");
         base.Enter();
     }
@@ -69,12 +83,14 @@ public class EnemyPursue : EnemyState
     {
         base.Update();
 
+        rigid.velocity = Vector2.left * moveSpeed;
+
         // 성 공격이되면 공격
-/*        if (CanAttackPlayer())
+        if (CanAttackTower())
         {
-            nextState = new Attack(myObj, myAgent, myAnim, playerTrm);
+            nextState = new EnemyAttack(myObj, myAnim, playerTrm);
             curEvent = eEvent.EXIT;
-        }*/
+        }
     }
 
     public override void Exit()
@@ -100,11 +116,11 @@ public class EnemyAttack : EnemyState
     public override void Update()
     {
         // 공격 범위 벗어나면 다시 추적
-/*        if (!CanAttackPlayer())
+        if (!CanAttackTower())
         {
-            nextState = new Idle(myObj, myAgent, myAnim, playerTrm);
+            nextState = new EnemyPursue(myObj, myAnim, playerTrm);
             curEvent = eEvent.EXIT;
-        }*/
+        }
     }
 
     public override void Exit()
@@ -123,7 +139,7 @@ public class EnemyDead : EnemyState
 
     public override void Enter()
     {
-        myAnim.SetTrigger("isShooting");
+        myObj.SetActive(false);
         base.Enter();
     }
 
@@ -134,7 +150,6 @@ public class EnemyDead : EnemyState
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }

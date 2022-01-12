@@ -97,7 +97,7 @@ public class MGEnemyWave : MonoBehaviour
                     nextEnemySpawnTimer -= Time.deltaTime;
                     if (nextEnemySpawnTimer < 0f)
                     {
-                        nextEnemySpawnTimer = Random.Range(0f, .4f);
+                        nextEnemySpawnTimer = Random.Range(0.5f, 0.7f);
 
                         // 角力 利 积己 饶 remainingEnemySpawnAmount 窍唱究 皑家
                         CONEnemy.Create(GetSpawnPosition());
