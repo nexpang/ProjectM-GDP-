@@ -10,6 +10,7 @@ public class Global
 
     public static Vector2 referenceResolution;
     public static Image blackPannel;
+    internal static eGameStatus _gameStat;
 }
 
 public enum ePrefabs
@@ -25,6 +26,7 @@ public enum ePrefabs
     MANAGERS = 2000,
     MGPool,
     MGGame,
+    MGEnemyWave,
     UI = 3000,
     UIRoot,
     UIRootLoading,
@@ -38,6 +40,12 @@ public enum eSceneName
     Loading,
     Title,
     Game,     
+}
+
+public enum eGameStatus
+{
+    None = -1,
+    Playing,
 }
 
 public class GameSceneClass

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MGGame : MonoBehaviour
 {
-    // public MGTeam _gTeamManager;
+    public MGEnemyWave _gEnemyWaveManager;
     // public MGStage _gStageManager;
     // public MGMinion _gMinionManager;
     // public MGHero.MGHero _gHeroManager;
@@ -17,7 +17,7 @@ public class MGGame : MonoBehaviour
 
         // GameSceneClass._gColManager = new MGUCCollider2D();
 
-        // _gTeamManager = new MGTeam();
+         _gEnemyWaveManager = new MGEnemyWave();
         // _gStageManager = new MGStage();
         // _gMinionManager = new MGMinion();
         // _gHeroManager = new MGHero.MGHero();
@@ -54,21 +54,25 @@ public class MGGame : MonoBehaviour
         }
 
 
+        if (Global._gameStat == eGameStatus.Playing)
+        {
+            _gEnemyWaveManager.UpdateDefence();
+        }
 
-        // if (Global._gameStat == eGameStatus.Playing)
-        // {
-        //     if (Global._gameMode == eGameMode.Collect)
-        //     {
-        //         _gStageManager.UpdateCollect();
-        //         _gMinionManager.UpdateCollect();
-        //     }
-        //     else if(Global._gameMode == eGameMode.Adventure)
-        //     {
-        //         _gStageManager.UpdateAdventure();
-        //         _gMinionManager.UpdateAdventure();
-        //         _gHeroManager.UpdateAdventure();
-        //     }
-        // }
+        //if (Global._gameStat == eGameStatus.Playing)
+        //{
+        //    if (Global._gameMode == eGameMode.Collect)
+        //    {
+        //        _gStageManager.UpdateCollect();
+        //        _gMinionManager.UpdateCollect();
+        //    }
+        //    else if (Global._gameMode == eGameMode.Adventure)
+        //    {
+        //        _gStageManager.UpdateAdventure();
+        //        _gMinionManager.UpdateAdventure();
+        //        _gHeroManager.UpdateAdventure();
+        //    }
+        //}
     }
 
     void LateUpdate()

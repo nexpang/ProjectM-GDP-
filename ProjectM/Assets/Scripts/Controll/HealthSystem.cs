@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HealthSystem : CONEntity
+public class HealthSystem : MonoBehaviour
 {
     public Action OnDamaged;
     public Action OnDied;

@@ -12,7 +12,7 @@ public class HealthBar : MonoBehaviour
 
     private void Awake()
     {
-        barTrm = transform.Find("bar");
+        barTrm = transform.Find("Bar");
     }
 
     void Start()
