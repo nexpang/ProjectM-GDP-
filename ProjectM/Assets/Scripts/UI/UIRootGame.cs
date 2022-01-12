@@ -38,6 +38,10 @@ public class UIRootGame : MonoBehaviour
     public Button resumeButton;
     public Button leaveButton;
 
+    [Header("Game Over")]
+    public CanvasGroup GameOverPanel;
+    public Button gameOverButton;
+
     void Awake()
     {
         GameSceneClass.gUiRootGame = this;
@@ -81,11 +85,23 @@ public class UIRootGame : MonoBehaviour
                 skill.Skill2Active();
             }
         });
+/*
+        () =>
+        {
+            Time.timeScale = 0;
+            GameOverPanel.DOFade(1, 0.5f);
+            GameOverPanel.blocksRaycasts = true;
+            GameOverPanel.interactable = true;
+        };*/
 
         skipTimeButton.onClick.AddListener(SkipTime);
         pauseButton.onClick.AddListener(Pause);
         resumeButton.onClick.AddListener(Resume);
         leaveButton.onClick.AddListener(Leave);
+        gameOverButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
     }
 
     private void SkipTime()
