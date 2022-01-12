@@ -5,6 +5,7 @@ using UnityEngine;
 public class MGGame : MonoBehaviour
 {
     public MGEnemyWave _gEnemyWaveManager;
+    public MGSkill _gSkillManager;
     // public MGStage _gStageManager;
     // public MGMinion _gMinionManager;
     // public MGHero.MGHero _gHeroManager;
@@ -19,6 +20,7 @@ public class MGGame : MonoBehaviour
 
         Transform spawns = GameObject.FindGameObjectWithTag("EnemySpawnpoint").transform;
         _gEnemyWaveManager = new MGEnemyWave(spawns);
+        _gSkillManager = new MGSkill();
         // _gStageManager = new MGStage();
         // _gMinionManager = new MGMinion();
         // _gHeroManager = new MGHero.MGHero();
@@ -58,6 +60,7 @@ public class MGGame : MonoBehaviour
         if (Global._gameStat == eGameStatus.Playing)
         {
             _gEnemyWaveManager.UpdateDefence();
+            _gSkillManager.ManaFill();
         }
 
         //if (Global._gameStat == eGameStatus.Playing)
