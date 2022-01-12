@@ -23,8 +23,10 @@ public class CONArrow : CONEntity
     private Vector3 lastMoveDir;
     private float timeToDie = 2f;
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
+
         Vector3 moveDir;
         if (targetEnemy != null)
         {

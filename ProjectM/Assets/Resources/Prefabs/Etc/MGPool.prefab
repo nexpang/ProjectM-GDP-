@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 277131986977991892}
-  - component: {fileID: -5590137055299874246}
+  - component: {fileID: 5955119955952756951}
   m_Layer: 0
   m_Name: MGPool
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5590137055299874246
+--- !u!114 &5955119955952756951
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,11 +46,10 @@ MonoBehaviour:
   poolObjList: []
   poolObjCount: 
   poolHeroObjList:
-  - {fileID: 3126957719968890159, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
   - {fileID: 3126957719968890159, guid: 3a0163611fd264c4ea76eae99a3cb8cf, type: 3}
-  - {fileID: 3420699037522048006, guid: cf3264490ee3aa448ac73aade6bffc72, type: 3}
+  - {fileID: 3126957719968890159, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
   - {fileID: 8042974024142965120, guid: 124c4293df1e7974fb98ad79ee1db28e, type: 3}
-  - {fileID: 0}
-  poolHeroCountList: 01000000010000000a0000000900000000000000
+  - {fileID: 3420699037522048006, guid: cf3264490ee3aa448ac73aade6bffc72, type: 3}
+  poolHeroCountList: 00000000000000000000000000000000
   poolHeroMaxCount: 4
   myTrm: {fileID: 0}
