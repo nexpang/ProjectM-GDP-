@@ -50,6 +50,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45b6241bfff548ebaa9304c9bd0822f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBar: {fileID: 2171979076307714326}
+  hpText: {fileID: 4093589587179518188}
   waveBar: {fileID: 6761062315454107412}
   waveText: {fileID: 8890038628484027429}
   manaBar: {fileID: 3243981498487531712}

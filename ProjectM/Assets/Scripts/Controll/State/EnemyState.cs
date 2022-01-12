@@ -134,6 +134,7 @@ public class EnemyAttack : EnemyState
         if (curAttackCoolDown > attackCoolDown)
         {
             curAttackCoolDown -= attackCoolDown;
+            GameSceneClass.gMGGame.Damage(10f);
             myAnim.SetTrigger("doAttack");
         }
         // 공격 범위 벗어나면 다시 추적

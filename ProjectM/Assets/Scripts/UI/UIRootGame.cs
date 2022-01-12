@@ -48,6 +48,14 @@ public class UIRootGame : MonoBehaviour
         enemyWave = GameSceneClass.gMGGame._gEnemyWaveManager;
         skill = GameSceneClass.gMGGame._gSkillManager;
 
+        GameSceneClass.gMGGame.UpdateToewrHealth += (amount) =>
+        {
+            float maxHp = GameSceneClass.gMGGame.healthAmountMax;
+            float f = Mathf.Clamp(amount / maxHp, 0, 1);
+            hpBar.localScale = new Vector2(f, hpBar.localScale.y);
+            hpText.text = amount.ToString();
+        };
+
         enemyWave.OnWaveWait += (amount) =>
         {
             float f = Mathf.Clamp(amount/ 7.0f, 0, 1);
