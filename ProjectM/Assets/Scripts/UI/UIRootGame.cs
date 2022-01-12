@@ -8,9 +8,27 @@ public class UIRootGame : MonoBehaviour
     [SerializeField]
     private Image testImage;
 
+    public RectTransform waveBar;
+    public Text waveText;
+
+    private MGEnemyWave enemyWave;
+
     void Awake()
     {
         GameSceneClass.gUiRootGame = this;
+    }
+
+    private void Start()
+    {
+        enemyWave = GameSceneClass.gMGGame._gEnemyWaveManager;
+        enemyWave.OnWaveWait += (amount) =>
+        {
+            Mathf.Clamp(amount/ 7.0f, 0, 1);
+        };
+        enemyWave.OnWaveNumberChanged += (waveNum) =>
+        {
+            waveText.text = $"WAVE {waveNum}";
+        };
     }
 
     private void Update() 

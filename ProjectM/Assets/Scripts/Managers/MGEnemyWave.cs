@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MGEnemyWave : MonoBehaviour
 {
     public Action<int> OnWaveNumberChanged;
-    public Action<float> OnEnemySpawnAmountChanged;
+    public Action<float> OnWaveWait;
 
     // 1 웨이브 기본
     private enum eWaveState
@@ -50,6 +50,7 @@ public class MGEnemyWave : MonoBehaviour
         {
             case eWaveState.WaitingToSpawnNextWave:
                 nextWaveSpawnTimer -= Time.deltaTime;
+                OnWaveWait?.Invoke(nextWaveSpawnTimer);
                 if (nextWaveSpawnTimer < 0f)
                 {
                     SpawnWave();
@@ -70,7 +71,6 @@ public class MGEnemyWave : MonoBehaviour
                         // 실제 적 생성 후 remainingEnemySpawnAmount 하나씩 감소
                         CONEnemy.Create(spawnPosition);
                         remainingEnemySpawnAmount--;
-                        OnEnemySpawnAmountChanged?.Invoke(nextEnemySpawnTimer);
 
                         // 스폰 예정된 적을 모두 소진했다면 새로운 스폰위치를 랜덤으로 받고 다시 스폰 대기상태로...
                         if (remainingEnemySpawnAmount <= 0)
