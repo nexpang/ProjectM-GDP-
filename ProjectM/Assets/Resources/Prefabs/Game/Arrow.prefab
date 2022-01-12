@@ -93,7 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f57e85c372375541b157e2b14b71d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myKind: 1003
+  myKind: 1004
   myTrm: {fileID: 0}
   myVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &3420699038597108204

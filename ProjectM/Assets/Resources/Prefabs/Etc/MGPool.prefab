@@ -45,7 +45,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolObjList: []
   poolObjCount: 
-  poolHeroObjList: []
-  poolHeroCountList: 
-  poolHeroMaxCount: 0
+  poolHeroObjList:
+  - {fileID: 3126957719968890159, guid: e3926d4485b7c4fc0815888cf1a8ec14, type: 3}
+  - {fileID: 3126957719968890159, guid: 3a0163611fd264c4ea76eae99a3cb8cf, type: 3}
+  - {fileID: 3420699037522048006, guid: cf3264490ee3aa448ac73aade6bffc72, type: 3}
+  - {fileID: 8042974024142965120, guid: 124c4293df1e7974fb98ad79ee1db28e, type: 3}
+  - {fileID: 0}
+  poolHeroCountList: 01000000010000000a0000000900000000000000
+  poolHeroMaxCount: 4
   myTrm: {fileID: 0}

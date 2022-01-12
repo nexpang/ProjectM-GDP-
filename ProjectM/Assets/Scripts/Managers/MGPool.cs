@@ -53,6 +53,8 @@ public class MGPool : MonoBehaviour
             CONEntity myEn = null;
             ePrefabs myKind = ePrefabs.None;
 
+            print(poolObjList[i].gameObject.name);
+
             myEn = poolObjList[i].GetComponent<CONEntity>();
 
             if (myEn == null)

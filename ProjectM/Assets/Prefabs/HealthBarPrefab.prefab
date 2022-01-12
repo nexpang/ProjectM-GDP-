@@ -128,6 +128,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba6fb2ae64137c40b8ebd45cb8d26e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myKind: 1006
+  myTrm: {fileID: 0}
+  myVelocity: {x: 0, y: 0, z: 0}
   healthSystem: {fileID: 0}
 --- !u!1 &3717590260588230445
 GameObject:

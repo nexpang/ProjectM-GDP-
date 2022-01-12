@@ -4,15 +4,79 @@ using UnityEngine;
 
 public class CONArcher : CONEntity
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private float shootTimerMax;
+
+    private float shootTimer;
+
+    private CONEnemy targetEnemy;
+
+    private float lookForTargetTimer;
+    private float lookForTargetTimerMax = 0.2f;
+
+    private Vector3 arrowSpawnPos;
+
+    public override void Awake()
     {
-        
+        base.Awake();
+        arrowSpawnPos = transform.Find("arrowSpawnPos").position;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
+        HandleTargetting();
+
+        HandleShooting();
+    }
+
+    private void HandleTargetting()
+    {
+        lookForTargetTimer -= Time.deltaTime;
+        if (lookForTargetTimer < 0f)
+        {
+            lookForTargetTimer += lookForTargetTimerMax;
+            LookForTargets();
+        }
+    }
+
+    private void HandleShooting()
+    {
+        shootTimer -= Time.deltaTime;
+
+        if (shootTimer <= 0f)
+        {
+            shootTimer += lookForTargetTimerMax;
+            if (targetEnemy != null)
+            {
+                CONArrow.Create(arrowSpawnPos, targetEnemy);
+            }
+        }
+    }
+
+    private void LookForTargets()
+    {
+        float targetMaxRadius = 20;
+
+        Collider2D[] collider2DArray = Physics2D.OverlapCircleAll(transform.position, targetMaxRadius);
+
+        foreach (Collider2D collider in collider2DArray)
+        {
+            CONEnemy enemy = collider.GetComponent<CONEnemy>();
+            if (enemy != null)
+            {
+                if (targetEnemy == null)
+                {
+                    targetEnemy = enemy;
+                }
+                else
+                {
+                    if (Vector3.Distance(transform.position, enemy.transform.position) < Vector3.Distance(transform.position, targetEnemy.transform.position))
+                    {
+                        targetEnemy = enemy;
+                    }
+                }
+            }
+        }
     }
 }
