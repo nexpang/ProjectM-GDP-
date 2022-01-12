@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,13 @@ public class MGGame : MonoBehaviour
     // public MGHero.MGHero _gHeroManager;
 
     List<CONEntity> heroConList = new List<CONEntity>();
+
+    public float healthAmountMax = 100;
+
+    private float curHealthMount;
+
+    public Action<float> UpdateToewrHealth;
+    public Action OnGameOver;
 
     void Awake()
     {
@@ -31,6 +39,10 @@ public class MGGame : MonoBehaviour
 
         heroConList.Clear();
     }
+    private void Start()
+    {
+        curHealthMount = healthAmountMax;
+    }
 
     void OnEnable()
     {
@@ -42,7 +54,7 @@ public class MGGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            CONEntity heroCon = GameSceneClass.gMGPool.CreateObj(ePrefabs.HeroSword, Random.insideUnitCircle);
+            CONEntity heroCon = GameSceneClass.gMGPool.CreateObj(ePrefabs.HeroSword, UnityEngine.Random.insideUnitCircle);
             heroConList.Add(heroCon);
         }
 
@@ -77,6 +89,21 @@ public class MGGame : MonoBehaviour
         //        _gHeroManager.UpdateAdventure();
         //    }
         //}
+    }
+
+    public void Damage(float damage)
+    {
+        curHealthMount -= damage;
+        UpdateToewrHealth?.Invoke(curHealthMount);
+        if(curHealthMount<=0)
+        {
+            GameOver();
+        }
+    }
+
+    public void GameOver()
+    {
+        OnGameOver();
     }
 
     void LateUpdate()
