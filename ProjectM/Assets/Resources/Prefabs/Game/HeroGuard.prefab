@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6519495541739876637}
   - component: {fileID: 2486038274243175365}
   - component: {fileID: 1227261617057105422}
+  - component: {fileID: 8458404829016747861}
   m_Layer: 0
   m_Name: HeroGuard
   m_TagString: Untagged
@@ -118,3 +119,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8458404829016747861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3126957719968890159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdf1516200dee94408f8f1dcfbc9f4c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
