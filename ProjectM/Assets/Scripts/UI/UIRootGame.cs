@@ -23,7 +23,8 @@ public class UIRootGame : MonoBehaviour
         enemyWave = GameSceneClass.gMGGame._gEnemyWaveManager;
         enemyWave.OnWaveWait += (amount) =>
         {
-            Mathf.Clamp(amount/ 7.0f, 0, 1);
+            float f = Mathf.Clamp(amount/ 7.0f, 0, 1);
+            waveBar.localScale = new Vector2(f, waveBar.localScale.y);
         };
         enemyWave.OnWaveNumberChanged += (waveNum) =>
         {
