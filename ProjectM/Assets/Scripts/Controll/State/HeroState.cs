@@ -244,7 +244,7 @@ public class HeroAttack : HeroState
                 {
                     for (int i = 0; i < hit.Length; i++)
                     {
-                        //hit[i].collider.GetComponent<CONEnemy>().OnDamage();
+                        hit[i].collider.GetComponent<HealthSystem>().Damage(20);
                     }
                 }
             }

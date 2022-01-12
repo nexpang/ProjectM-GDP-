@@ -60,7 +60,7 @@ public class MGGame : MonoBehaviour
         if (Global._gameStat == eGameStatus.Playing)
         {
             _gEnemyWaveManager.UpdateDefence();
-            _gSkillManager.ManaFill();
+            _gSkillManager.UpdateSkill();
         }
 
         //if (Global._gameStat == eGameStatus.Playing)

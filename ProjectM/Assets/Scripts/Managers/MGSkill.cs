@@ -20,11 +20,23 @@ public class MGSkill : MonoBehaviour
         
     }
 
-    public void ManaFill()
+    public void UpdateSkill()
+    {
+        ManaFill();
+
+
+    }
+
+    public void ManaRefresh()
+    {
+        OnManaChanged(mana);
+    }
+
+    private void ManaFill()
     {
         manaCooldown += Time.deltaTime;
 
-        if(manaCooldown > manaDelay)
+        if (manaCooldown > manaDelay)
         {
             manaCooldown -= manaDelay;
 
@@ -33,6 +45,26 @@ public class MGSkill : MonoBehaviour
                 mana++;
                 OnManaChanged(mana);
             }
+        }
+    }
+
+    public void Skill1Active()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<HealthSystem>().Damage(10);
+        }
+    }
+
+    public void Skill2Active()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].GetComponent<Rigidbody2D>().AddForce(Vector2.right * 5, ForceMode2D.Impulse);
         }
     }
 }

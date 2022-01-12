@@ -14,6 +14,14 @@ public class UIRootGame : MonoBehaviour
     public Text manaText;
     private MGSkill skill;
 
+    public Button Skill1;
+    public Image skill1_cool;
+    private const float skill1_coolTime = 5;
+    private float skill1_curCoolTime = skill1_coolTime;
+
+    public Button Skill2;
+    public Image skill2_cool;
+
     public Button skipTimeButton;
     public Text skipTimeText;
     private int skipIndex = 0;
@@ -52,7 +60,13 @@ public class UIRootGame : MonoBehaviour
 
             manaText.text = $"{mana} / 20";
         };
-        
+
+        Skill1.onClick.AddListener(() =>
+        {
+
+        });
+
+
 
         skipTimeButton.onClick.AddListener(SkipTime);
         pauseButton.onClick.AddListener(Pause);
