@@ -24,6 +24,8 @@ public class UIRootGame : MonoBehaviour
 
     public Button Skill2;
     public Image skill2_cool;
+    private const float skill2_coolTime = 10;
+    private float skill2_curCoolTime = skill2_coolTime;
 
     public Button skipTimeButton;
     public Text skipTimeText;
@@ -66,10 +68,15 @@ public class UIRootGame : MonoBehaviour
 
         Skill1.onClick.AddListener(() =>
         {
-
+            skill.ManaReduce(8);
+            skill.Skill1Active();
         });
 
-
+        Skill2.onClick.AddListener(() =>
+        {
+            skill.ManaReduce(10);
+            skill.Skill2Active();
+        });
 
         skipTimeButton.onClick.AddListener(SkipTime);
         pauseButton.onClick.AddListener(Pause);
@@ -108,7 +115,7 @@ public class UIRootGame : MonoBehaviour
         saveTimeScale = Time.timeScale;
         Time.timeScale = 0;
 
-        pausePanel.DOFade(1, 0.5f);
+        pausePanel.DOFade(1, 0.5f).SetUpdate(true);
         pausePanel.blocksRaycasts = true;
         pausePanel.interactable = true;
     }
@@ -117,7 +124,7 @@ public class UIRootGame : MonoBehaviour
     {
         Time.timeScale = saveTimeScale;
 
-        pausePanel.DOFade(0, 0.5f);
+        pausePanel.DOFade(0, 0.5f).SetUpdate(true);
         pausePanel.blocksRaycasts = false;
         pausePanel.interactable = false;
     }

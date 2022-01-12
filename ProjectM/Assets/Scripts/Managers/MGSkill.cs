@@ -27,9 +27,13 @@ public class MGSkill : MonoBehaviour
 
     }
 
-    public void ManaRefresh()
+    public void ManaReduce(int value)
     {
-        OnManaChanged(mana);
+        if (mana >= value)
+        {
+            mana -= value;
+            OnManaChanged(mana);
+        }
     }
 
     private void ManaFill()
