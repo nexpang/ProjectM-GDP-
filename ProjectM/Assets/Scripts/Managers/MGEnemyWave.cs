@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MGEnemyWave : MonoBehaviour
 {
@@ -26,23 +27,53 @@ public class MGEnemyWave : MonoBehaviour
 
 
     // 3 스폰 지점을 리스트로 생성
-    //[SerializeField] private Transform spawnPositionTransform;
-    private Vector3 spawnPosition;
+    private Transform spawnPositionTransform;
+    private List<Vector3> spawnPositionList;
 
 
-    private void Awake()
+    public MGEnemyWave(Transform spwans)
     {
-        spawnPosition = transform.Find("enemySpawnPos").position;
-    }
+        spawnPositionList = new List<Vector3>();
+        this.spawnPositionTransform = spwans;
+        if (spawnPositionList == null)
+        {
+            print("tq");
+        }
+        else
+        {
+            for (int i = 0; i < spawnPositionTransform.childCount; i++)
+            {
+                spawnPositionList.Add(spawnPositionTransform.GetChild(i).position);
+            }
+        }
 
-    private void Start()
-    {
+        //spawnPositionList.Add(new Vector3(26f, -1.54f, 0f));
+        //spawnPositionList.Add(new Vector3(26f, -3.93f, 0f));
+
         // 최소 스폰 시작 전 세팅
         state = eWaveState.WaitingToSpawnNextWave;
 
         // 최초 게임 시작 후 3초 이후에 순환 시작
         nextWaveSpawnTimer = 3f;
     }
+
+    //private void Awake()
+    //{
+    //    spawnPositionTransform = transform.Find("enemySpawnPos");
+    //    for (int i = 0; i < spawnPositionTransform.childCount; i++)
+    //    {
+    //        spawnPositionList.Add(spawnPositionTransform.GetChild(i));
+    //    }
+    //}
+
+    //private void Start()
+    //{
+    //    // 최소 스폰 시작 전 세팅
+    //    state = eWaveState.WaitingToSpawnNextWave;
+
+    //    // 최초 게임 시작 후 3초 이후에 순환 시작
+    //    nextWaveSpawnTimer = 3f;
+    //}
 
     public void UpdateDefence()
     {
@@ -66,10 +97,10 @@ public class MGEnemyWave : MonoBehaviour
                     nextEnemySpawnTimer -= Time.deltaTime;
                     if (nextEnemySpawnTimer < 0f)
                     {
-                        nextEnemySpawnTimer = UnityEngine.Random.Range(0f, .4f);
+                        nextEnemySpawnTimer = Random.Range(0f, .4f);
 
                         // 실제 적 생성 후 remainingEnemySpawnAmount 하나씩 감소
-                        CONEnemy.Create(spawnPosition);
+                        CONEnemy.Create(GetSpawnPosition());
                         remainingEnemySpawnAmount--;
 
                         // 스폰 예정된 적을 모두 소진했다면 새로운 스폰위치를 랜덤으로 받고 다시 스폰 대기상태로...
@@ -108,6 +139,7 @@ public class MGEnemyWave : MonoBehaviour
 
     public Vector3 GetSpawnPosition()
     {
-        return spawnPosition;
+        int randIdx = Random.Range(0, spawnPositionList.Count);
+        return spawnPositionList[randIdx];
     }
 }

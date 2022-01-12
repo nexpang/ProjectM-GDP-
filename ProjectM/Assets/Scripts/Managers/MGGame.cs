@@ -17,7 +17,8 @@ public class MGGame : MonoBehaviour
 
         // GameSceneClass._gColManager = new MGUCCollider2D();
 
-         _gEnemyWaveManager = new MGEnemyWave();
+        Transform spawns = GameObject.FindGameObjectWithTag("EnemySpawnpoint").transform;
+        _gEnemyWaveManager = new MGEnemyWave(spawns);
         // _gStageManager = new MGStage();
         // _gMinionManager = new MGMinion();
         // _gHeroManager = new MGHero.MGHero();
