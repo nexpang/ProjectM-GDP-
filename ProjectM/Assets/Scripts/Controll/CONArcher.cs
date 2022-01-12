@@ -15,11 +15,14 @@ public class CONArcher : CONEntity
     private float lookForTargetTimerMax = 0.2f;
 
     private Vector3 arrowSpawnPos;
+    private Animator anim;
+
 
     public override void Awake()
     {
         base.Awake();
         arrowSpawnPos = transform.Find("arrowSpawnPos").position;
+        anim = GetComponent<Animator>();
     }
 
     public override void Update()
@@ -46,7 +49,7 @@ public class CONArcher : CONEntity
 
         if (shootTimer <= 0f)
         {
-            shootTimer += lookForTargetTimerMax;
+            shootTimer += shootTimerMax;
             if (targetEnemy != null)
             {
                 CONArrow.Create(arrowSpawnPos, targetEnemy);
@@ -65,6 +68,7 @@ public class CONArcher : CONEntity
             CONEnemy enemy = collider.GetComponent<CONEnemy>();
             if (enemy != null)
             {
+                anim.SetTrigger("doAttack");
                 if (targetEnemy == null)
                 {
                     targetEnemy = enemy;
@@ -76,6 +80,10 @@ public class CONArcher : CONEntity
                         targetEnemy = enemy;
                     }
                 }
+            }
+            else
+            {
+                anim.SetTrigger("doStop");
             }
         }
     }
