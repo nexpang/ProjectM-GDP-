@@ -17,6 +17,7 @@ public class UIRoot : MonoBehaviour
     void Awake()
     {
         rootCanvas = this.gameObject.GetComponent<CanvasScaler>();
+        rootCanvas.referenceResolution = new Vector2(1920, 1080);
 
         Global.referenceResolution = new Vector2();
         Global.referenceResolution = rootCanvas.referenceResolution;
