@@ -39,7 +39,7 @@ public class MGGame : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            CONEntity heroCon = GameSceneClass.gMGPool.CreateObj(ePrefabs.HeroGirl, Random.insideUnitCircle);
+            CONEntity heroCon = GameSceneClass.gMGPool.CreateObj(ePrefabs.HeroSword, Random.insideUnitCircle);
             heroConList.Add(heroCon);
         }
 
