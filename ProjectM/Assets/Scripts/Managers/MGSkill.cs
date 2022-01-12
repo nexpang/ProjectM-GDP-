@@ -27,12 +27,17 @@ public class MGSkill : MonoBehaviour
 
     }
 
-    public void ManaReduce(int value)
+    public bool ManaReduce(int value)
     {
         if (mana >= value)
         {
             mana -= value;
             OnManaChanged(mana);
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -58,7 +63,7 @@ public class MGSkill : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<HealthSystem>().Damage(10);
+            enemies[i].GetComponent<HealthSystem>().Damage(50);
         }
     }
 
@@ -68,7 +73,7 @@ public class MGSkill : MonoBehaviour
 
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].GetComponent<Rigidbody2D>().AddForce(Vector2.right * 5, ForceMode2D.Impulse);
+            enemies[i].transform.position += new Vector3(10, 0, 0);
         }
     }
 }
