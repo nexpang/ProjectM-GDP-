@@ -76,14 +76,18 @@ public class UIRootGame : MonoBehaviour
 
         Skill1.onClick.AddListener(() =>
         {
-            skill.ManaReduce(8);
-            skill.Skill1Active();
+            if (skill.ManaReduce(10))
+            {
+                skill.Skill1Active();
+            }
         });
 
         Skill2.onClick.AddListener(() =>
         {
-            skill.ManaReduce(10);
-            skill.Skill2Active();
+            if (skill.ManaReduce(8))
+            {
+                skill.Skill2Active();
+            }
         });
 
         skipTimeButton.onClick.AddListener(SkipTime);
