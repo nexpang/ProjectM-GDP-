@@ -20,17 +20,21 @@ public class HeroState
 
     protected GameObject myObj;
     protected Animator myAnim;
+    protected GameObject targetEnemy;
+    protected SpriteRenderer sr;
 
     protected HeroState nextState;
 
-    float detectDist = 10.0f;
-    float attackDist = 7.0f;
+    float detectDist = 8.0f;
+    float attackDist = 3.0f;
     protected float speed = 3.0f;
 
-    public HeroState(GameObject obj, Animator anim)
+    public HeroState(GameObject obj, Animator anim, GameObject targetEnemy)
     {
         myObj = obj;
         myAnim = anim;
+        this.targetEnemy = targetEnemy;
+        sr = myObj.GetComponent<SpriteRenderer>();
 
         curEvent = eEvent.ENTER;
     }
@@ -55,7 +59,31 @@ public class HeroState
     {
         closestEnemy = null;
         float distance = Mathf.Infinity;
-        Collider2D[] hit = Physics2D.OverlapCircleAll(myObj.transform.position, 5, 1 << LayerMask.NameToLayer("Enemy"));
+        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(detectDist, 1), 1 << LayerMask.NameToLayer("Enemy"));
+
+        if (hit.Length > 0) // 적이 보인다 (true)
+        {
+            for (int i = 0; i < hit.Length; i++)
+            {
+                float dis = Vector3.Distance(myObj.transform.position, hit[i].transform.position);
+                if (dis < distance)
+                {
+                    distance = dis;
+                    closestEnemy = hit[i].gameObject;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsDetectEnemy_AttackRange(out GameObject closestEnemy)
+    {
+        closestEnemy = null;
+        float distance = Mathf.Infinity;
+        Collider2D[] hit = Physics2D.OverlapBoxAll(myObj.transform.position, new Vector2(detectDist, 1), 1 << LayerMask.NameToLayer("Enemy"));
 
         if (hit.Length > 0) // 적이 보인다 (true)
         {
@@ -81,16 +109,14 @@ public class HeroPatrol : HeroState
     Vector3[] heroWaypointPos;
     int curIndex = 0;
 
-    SpriteRenderer sr;
-
-    public HeroPatrol(GameObject obj, Animator anim) : base(obj, anim)
+    public HeroPatrol(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim, targetEnemy)
     {
         stateName = eState.PATROL;
+        speed = 3f;
     }
 
     public override void Enter()
     {
-        myAnim.SetTrigger("isRunning");
         GameObject[] heroWaypoint = GameObject.FindGameObjectsWithTag("HeroWaypoint");
         heroWaypointPos = new Vector3[heroWaypoint.Length];
 
@@ -100,8 +126,6 @@ public class HeroPatrol : HeroState
         }
 
         Debug.Log(heroWaypoint.Length);
-
-        sr = myObj.GetComponent<SpriteRenderer>();
         base.Enter();
     }
 
@@ -131,32 +155,25 @@ public class HeroPatrol : HeroState
             nextState = new HeroPursue(myObj, myAnim, enemy);
             curEvent = eEvent.EXIT;
         }
-
-        // 적이 보이면 추적
-/*        if (CanSeePlayer())
-        {
-            nextState = new Patrol(myObj, myAgent, myAnim, playerTrm);
-            curEvent = eEvent.EXIT;
-        }*/
     }
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }
 
 public class HeroPursue : HeroState
 {
-    public HeroPursue(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim)
+    public HeroPursue(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim, targetEnemy)
     {
         stateName = eState.PURSUE;
+        speed = 5f;
+        this.targetEnemy = targetEnemy;
     }
 
     public override void Enter()
     {
-        myAnim.SetTrigger("isRunning");
         base.Enter();
     }
 
@@ -164,52 +181,61 @@ public class HeroPursue : HeroState
     {
         base.Update();
 
-        // 적과 가까워지면 공격, 없다면 패트롤
-/*        if (CanAttackPlayer())
+        float flipDir = myObj.transform.position.x - targetEnemy.transform.position.x;
+        sr.flipX = (flipDir > 0);
+
+        if (IsDetectEnemy_AttackRange(out GameObject enemy))
         {
-            nextState = new Attack(myObj, myAgent, myAnim, playerTrm);
+            nextState = new HeroAttack(myObj, myAnim, enemy);
             curEvent = eEvent.EXIT;
         }
-        else if (!CanSeePlayer())
+        else if (!IsDetectEnemy(out GameObject enemy2))
         {
-            nextState = new Patrol(myObj, myAgent, myAnim, playerTrm);
+            nextState = new HeroPatrol(myObj, myAnim, null);
             curEvent = eEvent.EXIT;
-        }*/
+        }
     }
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }
 
 public class HeroAttack : HeroState
 {
-    public HeroAttack(GameObject obj, Animator anim) : base(obj, anim)
+    public HeroAttack(GameObject obj, Animator anim, GameObject targetEnemy) : base(obj, anim, targetEnemy)
     {
         stateName = eState.ATTACK;
+        this.targetEnemy = targetEnemy;
     }
 
     public override void Enter()
     {
-        myAnim.SetTrigger("isShooting");
         base.Enter();
     }
 
     public override void Update()
     {
-        // 타겟팅된 유닛이 사라졌는지 체크 후 다시 Patrol로 돌아가야 함
-/*        if (!CanAttackPlayer())
+        Vector3 dir = myObj.transform.position - targetEnemy.transform.position;
+
+        if (dir.magnitude >= 1)
         {
-            nextState = new Idle(myObj, myAgent, myAnim, playerTrm);
+            myObj.transform.position = Vector3.MoveTowards(myObj.transform.position, targetEnemy.transform.position, speed * Time.deltaTime);
+        }
+
+        float flipDir = myObj.transform.position.x - targetEnemy.transform.position.x;
+        sr.flipX = (flipDir > 0);
+
+        if (!IsDetectEnemy(out GameObject enemy2))
+        {
+            nextState = new HeroPatrol(myObj, myAnim, null);
             curEvent = eEvent.EXIT;
-        }*/
+        }
     }
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }

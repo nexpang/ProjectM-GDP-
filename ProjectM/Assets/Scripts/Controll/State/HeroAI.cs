@@ -8,11 +8,12 @@ public class HeroAI : MonoBehaviour
 
     Animator myAnim;
     HeroState curState;
+    GameObject targetEnemy;
 
     private void Start()
     {
         myAnim = this.GetComponent<Animator>();
-        curState = new HeroPatrol(this.gameObject, myAnim);
+        curState = new HeroPatrol(this.gameObject, myAnim, targetEnemy);
     }
 
     private void Update()
