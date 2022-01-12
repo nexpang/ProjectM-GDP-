@@ -50,11 +50,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d45b6241bfff548ebaa9304c9bd0822f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testImage: {fileID: 4017909153484972873}
+  hpBar: {fileID: 2171979076307714326}
+  hpText: {fileID: 7766102458311151251}
   waveBar: {fileID: 6761062315454107412}
   waveText: {fileID: 8890038628484027429}
   manaBar: {fileID: 3243981498487531712}
   manaText: {fileID: 5188328148444307989}
+  Skill1: {fileID: 0}
+  skill1_cool: {fileID: 0}
+  Skill2: {fileID: 0}
+  skill2_cool: {fileID: 0}
   skipTimeButton: {fileID: 3612232868118810502}
   skipTimeText: {fileID: 7332727997400652918}
   pauseButton: {fileID: 6907027861676721668}
@@ -774,6 +779,7 @@ GameObject:
   - component: {fileID: 2171979076307714326}
   - component: {fileID: 5445150537932656379}
   - component: {fileID: 4017909153484972873}
+  - component: {fileID: 3465161685528431166}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -838,6 +844,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &3465161685528431166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815933514663104641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ba6fb2ae64137c40b8ebd45cb8d26e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSystem: {fileID: 0}
 --- !u!1 &1574247599798036456
 GameObject:
   m_ObjectHideFlags: 0

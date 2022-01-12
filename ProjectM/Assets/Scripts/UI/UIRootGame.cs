@@ -6,6 +6,9 @@ using DG.Tweening;
 
 public class UIRootGame : MonoBehaviour
 {
+    public RectTransform hpBar;
+    public Text hpText;
+
     public RectTransform waveBar;
     public Text waveText;
     private MGEnemyWave enemyWave;

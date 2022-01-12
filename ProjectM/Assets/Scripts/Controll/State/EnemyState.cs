@@ -24,7 +24,7 @@ public class EnemyState
 
     protected EnemyState nextState;
 
-    float attackDist = 1.0f;
+    float attackDist = 2.0f;
     private HealthSystem healthSystem;
 
     public EnemyState(GameObject obj, Animator anim, Transform targetTrm)
@@ -56,7 +56,8 @@ public class EnemyState
 
     protected bool CanAttackTower()
     {
-        if(Mathf.Abs(playerTrm.position.x-myObj.transform.position.x) < attackDist)
+        Debug.Log(Mathf.Abs((-12) - myObj.transform.position.x));
+        if(Mathf.Abs(myObj.transform.position.x - (-12)) < attackDist)
         {
             return true;
         }
@@ -83,7 +84,6 @@ public class EnemyPursue : EnemyState
     {
         moveSpeed = 3f;
         rigid = myObj.GetComponent<Rigidbody2D>();
-        myAnim.SetTrigger("isRunning");
         base.Enter();
     }
 
@@ -101,6 +101,7 @@ public class EnemyPursue : EnemyState
         }
         else if (CanAttackTower())
         {
+            rigid.velocity = Vector2.zero;
             nextState = new EnemyAttack(myObj, myAnim, playerTrm);
             curEvent = eEvent.EXIT;
         }
@@ -108,13 +109,15 @@ public class EnemyPursue : EnemyState
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }
 
 public class EnemyAttack : EnemyState
 {
+    private float curAttackCoolDown;
+    private float attackCoolDown = 1f;
+
     public EnemyAttack(GameObject obj, Animator anim, Transform targetTrm) : base(obj, anim, targetTrm)
     {
         stateName = eState.ATTACK;
@@ -122,12 +125,17 @@ public class EnemyAttack : EnemyState
 
     public override void Enter()
     {
-        myAnim.SetTrigger("isShooting");
         base.Enter();
     }
 
     public override void Update()
     {
+        curAttackCoolDown += Time.deltaTime;
+        if (curAttackCoolDown > attackCoolDown)
+        {
+            curAttackCoolDown -= attackCoolDown;
+            myAnim.SetTrigger("doAttack");
+        }
         // 공격 범위 벗어나면 다시 추적
         if (IsDead())
         {
@@ -143,7 +151,6 @@ public class EnemyAttack : EnemyState
 
     public override void Exit()
     {
-        myAnim.ResetTrigger("isRunning");
         base.Exit();
     }
 }
