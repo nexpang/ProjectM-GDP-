@@ -31,6 +31,11 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
+    public void Revive()
+    {
+        curHealthMount = healthAmountMax;
+    }
+
     public bool isDead()
     {
         return curHealthMount == 0;
