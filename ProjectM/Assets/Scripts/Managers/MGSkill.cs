@@ -23,8 +23,6 @@ public class MGSkill : MonoBehaviour
     public void UpdateSkill()
     {
         ManaFill();
-
-
     }
 
     public bool ManaReduce(int value)
